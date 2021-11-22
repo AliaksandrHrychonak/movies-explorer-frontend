@@ -5,7 +5,8 @@ import { useState } from 'react';
 import Header from '../Header/Header';
 import MobileMenu from '../MobileMenu/MobileMenu';
 import Promo from '../Promo/Promo';
-import NavTab from '../NavTab/NavTab';
+import AbouteProject from '../AboutProject/AboutProject'
+import Techs from '../Techs/Techs';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true)
@@ -34,7 +35,8 @@ const App = () => {
     <div className="page">
       <Header isLoggedIn={isLoggedIn} isMobile={isMobile} isMenuToggle={handleMobileMenu} />
       <Promo />
-      <NavTab />
+      <AbouteProject />
+      <Techs />
       <MobileMenu isLoggedIn={isLoggedIn} isOpen={isMobileMenuOpen} isMobile={isMobile} isMenuToggle={handleMobileMenu}/>
     </div>
   );
