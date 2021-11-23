@@ -1,15 +1,15 @@
 import React from 'react';
 import './Header.css'
-import logo from "../../images/logo.svg"
 import AccountBar from '../AccountBar/AccountBar';
 import Navigation from '../Navigation/Navigation';
+import Logo from '../Logo/Logo';
 
 const Header = ({ isLoggedIn, isMobile, isMenuToggle }) => {
 
   return (
     <header className="header">
-      <img src={logo} alt="логотип" className="logo"/>
-      <Navigation row={true} />
+      <Logo />
+      { isLoggedIn ? <Navigation row={true} /> : '' }
       <AccountBar isLoggedIn={isLoggedIn} isMobile={isMobile} isMenuToggle={isMenuToggle} accountBarMenu={true}/>
     </header>
   );

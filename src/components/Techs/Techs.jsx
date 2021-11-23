@@ -14,7 +14,7 @@ const Techs = () => {
       <ul className="techs__list">
         {
           techs.map((tech) => 
-            <li className="techs__list_element">
+            <li className="techs__list_element" key={tech}>
               <p className="techs__technology">{tech}</p>
             </li>
           )

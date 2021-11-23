@@ -17,7 +17,10 @@
 }
 
 .promo__title {
-  
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 58px;
+  margin: 0 0 36px;
 }
 
 .promo__subtitle {

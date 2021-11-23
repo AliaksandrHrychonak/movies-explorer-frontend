@@ -10,7 +10,7 @@
   justify-content: space-between;
   list-style: none;
   padding: 0;
-  margin: 0 0 110px;
+  margin: 70px 0 110px;
 }
 
 .aboute-project__element {
@@ -116,6 +116,7 @@
   .aboute-project__list {
     flex-direction: column;
     margin-bottom: 60px;
+    margin-top: 60px;
   }
 
   .aboute-project__subtitle {

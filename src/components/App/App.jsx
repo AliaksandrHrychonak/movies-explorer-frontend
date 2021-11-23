@@ -1,17 +1,17 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import { useState } from 'react';
-import Header from '../Header/Header';
-import MobileMenu from '../MobileMenu/MobileMenu';
-import Promo from '../Promo/Promo';
-import AbouteProject from '../AboutProject/AboutProject'
-import Techs from '../Techs/Techs';
+import { useState } from "react";
+import Main from "../Main/Main";
+import NotFound from "../NotFound/NotFound";
+import Register from "../Register/Register";
+import Login from "../Login/Login";
+
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true)
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isWindowDimension, setIsWindowDimension] = useState(0);
   const isMobile = isWindowDimension <= 768;
 
@@ -23,24 +23,34 @@ const App = () => {
     function handleResize() {
       setIsWindowDimension(window.innerWidth);
     }
-    window.addEventListener("resize", handleResize)
+    window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const handleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen)
-  }
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
 
   return (
     <div className="page">
-      <Header isLoggedIn={isLoggedIn} isMobile={isMobile} isMenuToggle={handleMobileMenu} />
-      <Promo />
-      <AbouteProject />
-      <Techs />
-      <MobileMenu isLoggedIn={isLoggedIn} isOpen={isMobileMenuOpen} isMobile={isMobile} isMenuToggle={handleMobileMenu}/>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Main
+              isLoggedIn={isLoggedIn}
+              isMobile={isMobile}
+              isMenuToggle={handleMobileMenu}
+              isOpen={isMobileMenuOpen}
+            />
+          }
+        />
+        <Route path="/sign-in" element={<Login />} />
+        <Route path="/sign-up" element={<Register/>} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </div>
   );
-}
+};
 
 export default App;
-
