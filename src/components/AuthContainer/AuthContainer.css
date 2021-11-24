@@ -2,8 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: calc(100% - 60px);
-  padding: 70px 30px;
+  width: 100%;
 }
 
 .auth__item {
@@ -22,10 +21,6 @@
 }
 
 @media screen and (max-width: 480px) {
-  .auth {
-    padding-top: 56px;
-    padding-bottom: 30px;
-  }
   .auth__item {
     align-items: center;
   }

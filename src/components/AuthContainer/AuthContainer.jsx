@@ -1,10 +1,11 @@
 import React from 'react';
 import './AuthContainer.css'
 import Logo from '../Logo/Logo';
+import ContentContainer from '../ContentContainer/ContentContainer';
 
 const AuthContainer = ({ title, children }) => {
   return (
-    <main>
+    <ContentContainer type="auth">
       <section className="auth">
         <div className="auth__item">
           <Logo />
@@ -12,7 +13,7 @@ const AuthContainer = ({ title, children }) => {
           { children }
         </div>
       </section>
-    </main>
+    </ContentContainer>
   );
 }
 

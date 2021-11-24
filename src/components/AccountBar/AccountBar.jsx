@@ -14,7 +14,7 @@ const AccountBar = ({ isLoggedIn, isMobile, isMenuToggle, accountBarMenu }) => {
               <span className="acccount-bar__burger-button_line"/>
             </button>
             :
-            <Link to="profile" className="account-bar__link">
+            <Link to="/profile" className="account-bar__link">
               <button className="account-bar__button account-bar__button_type_account">
                 <span className="account-bar__button-icon" />
                 Аккаунт
@@ -24,10 +24,10 @@ const AccountBar = ({ isLoggedIn, isMobile, isMenuToggle, accountBarMenu }) => {
         </>
       : 
       <>
-        <Link to="sign-up" className="account-bar__link">
+        <Link to="/sign-up" className="account-bar__link">
           <button className="account-bar__button account-bar__button_type_signup">Регистрация</button>
         </Link>
-        <Link to="sign-in" className="account-bar__link">
+        <Link to="/sign-in" className="account-bar__link">
           <button className="account-bar__button account-bar__button_type_signin">Войти</button>
         </Link>
       </>

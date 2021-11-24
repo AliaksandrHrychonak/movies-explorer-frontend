@@ -8,9 +8,11 @@ import Register from "../Register/Register";
 import Login from "../Login/Login";
 import Profile from "../Profile/Profile";
 import MobileMenu from "../MobileMenu/MobileMenu";
+import Movies from "../Movies/Movies";
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // eslint-disable-next-line no-unused-vars
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isWindowDimension, setIsWindowDimension] = useState(0);
@@ -50,9 +52,19 @@ const App = () => {
             />
           }
         />
+        <Route
+          path="/movies"
+          element={
+            <Movies
+              isLoggedIn={isLoggedIn}
+              isMobile={isMobile}
+              isMenuToggle={handleMobileMenu} 
+            />
+          } 
+        />
         <Route path="/sign-in" element={<Login />} />
         <Route path="/sign-up" element={<Register/>} />
-        <Route 
+        <Route
           path="/profile" 
           element={
             <Profile 
