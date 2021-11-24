@@ -1,14 +1,13 @@
 import React from 'react';
 import './Main.css';
 import Header from '../Header/Header';
-import MobileMenu from '../MobileMenu/MobileMenu';
 import Footer from '../Footer/Footer';
 import Promo from '../Promo/Promo';
 import AboutProject from '../AboutProject/AboutProject'
 import Techs from '../Techs/Techs';
 import Portfolio from '../Portfolio/Portfolio';
 
-const Main = ({isLoggedIn, isMobile, isMenuToggle, isOpen}) => {
+const Main = ({isLoggedIn, isMobile, isMenuToggle}) => {
   return (
     <main className="main">
       <Header isLoggedIn={isLoggedIn} isMobile={isMobile} isMenuToggle={isMenuToggle} />
@@ -17,7 +16,6 @@ const Main = ({isLoggedIn, isMobile, isMenuToggle, isOpen}) => {
       <Techs />
       <Portfolio />
       <Footer />
-      <MobileMenu isLoggedIn={isLoggedIn} isOpen={isOpen} isMobile={isMobile} isMenuToggle={isMenuToggle}/>
     </main>
   );
 }

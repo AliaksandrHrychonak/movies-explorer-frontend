@@ -6,7 +6,8 @@ import Main from "../Main/Main";
 import NotFound from "../NotFound/NotFound";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
-
+import Profile from "../Profile/Profile";
+import MobileMenu from "../MobileMenu/MobileMenu";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -31,6 +32,11 @@ const App = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  const user =  {
+    name: 'Виталий',
+    email: 'pochta@yandex.ru'
+  }
+
   return (
     <div className="page">
       <Routes>
@@ -41,14 +47,25 @@ const App = () => {
               isLoggedIn={isLoggedIn}
               isMobile={isMobile}
               isMenuToggle={handleMobileMenu}
-              isOpen={isMobileMenuOpen}
             />
           }
         />
         <Route path="/sign-in" element={<Login />} />
         <Route path="/sign-up" element={<Register/>} />
+        <Route 
+          path="/profile" 
+          element={
+            <Profile 
+              user={user}
+              isLoggedIn={isLoggedIn}
+              isMobile={isMobile}
+              isMenuToggle={handleMobileMenu}
+            />
+          } 
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <MobileMenu isLoggedIn={isLoggedIn} isOpen={isMobileMenuOpen} isMobile={isMobile} isMenuToggle={handleMobileMenu}/>
     </div>
   );
 };
