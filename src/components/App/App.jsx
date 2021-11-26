@@ -14,9 +14,10 @@ import SavedMovies from "../SavedMovies/SavedMovies";
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [movies, setMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  
   const [isWindowDimension, setIsWindowDimension] = useState(window.innerWidth);
+  
   const isMobile = isWindowDimension <= 768;
 
   useEffect(() => {
@@ -38,14 +39,17 @@ const App = () => {
   };
 
   useEffect(() => {
+    setIsLoading(true)
     moviesApi
       .getMovies()
       .then((data) => {
         setMovies(data);
+        setIsLoading(false)
       })
       .catch((err) => {
         console.log(err);
-      });
+      })
+
   }, []);
 
   const user = {
@@ -71,6 +75,7 @@ const App = () => {
           element={
             <Movies
               movies={movies}
+              isLoading={isLoading}
               isLoggedIn={isLoggedIn}
               isMobile={isMobile}
               isMenuToggle={handleMobileMenu}

@@ -1,6 +1,7 @@
 import React from "react";
 import "./ButtonIsSaveMovie.css";
-import savedIcon from '../../../images/icon-saved.svg'
+import savedIcon from '../../../images/icon-saved.svg';
+import crossIcon from '../../../images/cross-icon.svg';
 const ButtonIsSaveMovie = ({ locationMovies, isSaved, toggleSaved }) => {
 
   return (
@@ -13,7 +14,7 @@ const ButtonIsSaveMovie = ({ locationMovies, isSaved, toggleSaved }) => {
       {isSaved ? "Сохранить" : ""}
       </button>
       :
-      <button></button>
+      <button className="movie-button movie-button_type_delete" style={{backgroundImage: `url(${crossIcon})` }} />
   );
 };
 

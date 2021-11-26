@@ -9,7 +9,7 @@
 
 .main_type_movies {
   width: calc(100% - 140px);
-  padding: 80px 70px;
+  padding: 70px 70px;
 }
 
 .main_type_auth {
@@ -34,6 +34,9 @@
   .main_type_profile {
     padding-top: 236px;
     padding-bottom: 269px;
+  }
+  .main_type_movies {
+    padding-bottom: 80px;
   }
 }
 

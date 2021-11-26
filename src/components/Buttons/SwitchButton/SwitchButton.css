@@ -19,10 +19,14 @@
   cursor: pointer;
   width: 36px;
   height: 20px;
-  background: #EBEBEB;
+  background-color: #EBEBEB;
   border-radius: 20px;
   position: relative;
   transition: all 0.4s linear;
+}
+
+.switch__label:hover {
+  background-color: rgb(157, 157, 157);
 }
 
 .switch__label .switch__button {
@@ -33,7 +37,7 @@
   width: 16px;
   height: 16px;
   transition: 0.2s;
-  background: #2BE080;
+  background-color: #2BE080;
   border-radius: 50%;
   border: 1px solid #fff;
 }
@@ -48,4 +52,14 @@
   line-height: 18px;
   margin: 0 0 0 12px;
   padding: 0;
+}
+
+@media screen and (max-width: 450px) {
+ .switch {
+   margin-top: 42px;
+ }
+ .switch__title {
+  font-size: 11px;
+  margin-left: 13px;
+ }
 }

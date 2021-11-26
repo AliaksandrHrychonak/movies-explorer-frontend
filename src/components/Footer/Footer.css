@@ -79,14 +79,15 @@
     width: calc(100% - 20px);
     padding: 79px 10px 10px;
   }
-
+  .footer__link {
+    justify-content: center;
+  }
   .footer__section {
     flex-direction: column-reverse;
   }
 
   .footer__list {
     flex-direction: column;
-    text-align: center;
   }
 
   .footer__list_item {

@@ -16,16 +16,18 @@ const MoviesCard = ({ name, duration, link, image, isSavedCard, locationMovies }
   };
 
   return (  
-    <a href={link} className="card-link" target="_blank" rel="noreferrer">
+    
       <article className="card">
         <ButtonIsSaveMovie isSaved={isSavedMovie} toggleSaved={handleSavedMovie} locationMovies={locationMovies} />
-        <img src={`https://api.nomoreparties.co${image}`} alt={name} className="card__image" />
+        <a href={link} className="card-link" target="_blank" rel="noreferrer">
+          <img src={`https://api.nomoreparties.co${image}`} alt={name} className="card__image" />
+        </a>
         <div className="card__description">
           <p className="card__title">{name}</p>
           <span className="card__duration">{convertTime(duration)}</span>
         </div>
       </article>
-    </a>
+    
   );
 };
 
