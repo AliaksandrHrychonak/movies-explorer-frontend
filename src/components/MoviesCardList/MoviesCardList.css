@@ -1,0 +1,12 @@
+.movies {
+  padding: 118px 0 0;
+}
+
+.movies__item {
+  grid-template-columns: repeat(auto-fit, minmax(360px, max-content));
+  display: grid;
+  justify-content: center;
+  grid-column-gap: 30px;
+  grid-row-gap: 56px;
+  padding-bottom: 78px;
+}

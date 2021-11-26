@@ -1,6 +1,6 @@
 import React from 'react';
 import './SearchInput.css'
-import SwitchButton from '../SwitchButton/SwitchButton'
+import SwitchButton from '../Buttons/SwitchButton/SwitchButton'
 import searchIcon from '../../images/search-icon.svg'
 import searchIconBlack from '../../images/search-icon-black.svg'
 const SearchInput = ({ stateCheckBox, toogleCheckBox }) => {

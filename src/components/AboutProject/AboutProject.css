@@ -138,11 +138,14 @@
   .aboute-project__progress-title {
     font-size: 11px;
     line-height: 13px;
+    padding-top: 11px;
+    padding-bottom: 11px;
   }
 
   .aboute-project__progress-description {
     font-size: 11px;
     line-height: 13px;
+    padding-top: 10px;
   }
   .aboute-project__progress-element_type_left {
     width: 43.5%;

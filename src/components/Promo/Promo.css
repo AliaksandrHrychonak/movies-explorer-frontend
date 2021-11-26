@@ -42,11 +42,17 @@
   font-size: 12px;
   line-height: 16px;
   cursor: pointer;
+  transition: border 0.4s, background-color 0.4s ease;
+}
+
+.promo__button-more:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+  border: 1px solid #3456F3;
 }
 
 .promo__image {
   width: 310px;
-  height: 340px;
+  height: 310px;
   background-color: transparent;
   background-position: center;
   background-repeat: no-repeat;
@@ -87,6 +93,7 @@
 
 @media screen and (max-width: 450px) {
   .promo {
+    padding-top: 144px;
     padding-left: 14px;
     padding-right: 14px;
     padding-bottom: 30px;

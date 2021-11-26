@@ -1,0 +1,30 @@
+.movie-button {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  border: none;
+}
+
+.movie-button_type_saved {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s, visability 0.4s linear;
+  font-size: 10px;
+  line-height: 9px;
+  font-weight: 400;
+  padding: 6px 7px;
+  background-color: #F4F4F4;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.movie-button_type_save {
+  width: 21px;
+  height: 21px;
+  padding: 0;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #EE3465;
+  background-size: 8px 4.5px;
+  border-radius: 30px;
+}
