@@ -13,12 +13,19 @@ import { moviesApi } from "../../utils/MoviesApi";
 import SavedMovies from "../SavedMovies/SavedMovies";
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
+
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isWindowDimension, setIsWindowDimension] = useState(window.innerWidth);
   
   const isMobile = isWindowDimension <= 768;
+
+  useEffect(() => {
+    if(isMobile) {
+      setIsMobileMenuOpen(false)
+    }
+  }, [isMobile])
 
   useEffect(() => {
     let timeoutId = null;

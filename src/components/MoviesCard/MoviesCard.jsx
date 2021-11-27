@@ -19,7 +19,7 @@ const MoviesCard = ({ name, duration, link, image, isSavedCard, locationMovies }
     
       <article className="card">
         <ButtonIsSaveMovie isSaved={isSavedMovie} toggleSaved={handleSavedMovie} locationMovies={locationMovies} />
-        <a href={link} className="card-link" target="_blank" rel="noreferrer">
+        <a href={link} className="card-link" target="_blank" rel="noopener noreferrer">
           <img src={`https://api.nomoreparties.co${image}`} alt={name} className="card__image" />
         </a>
         <div className="card__description">

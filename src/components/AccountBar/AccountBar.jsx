@@ -14,8 +14,8 @@ const AccountBar = ({ isLoggedIn, isMobile, isMenuToggle, accountBarMenu }) => {
               <span className="acccount-bar__burger-button_line"/>
             </button>
             :
-            <Link to="/profile" className="account-bar__link">
-              <button className="account-bar__button account-bar__button_type_account">
+            <Link to="/profile" className="account-bar__link" >
+              <button className="account-bar__button account-bar__button_type_account" onClick={isMenuToggle}>
                 <span className="account-bar__button-icon" />
                 Аккаунт
               </button>

@@ -5,9 +5,6 @@
   justify-content: flex-start;
   margin-left: 44px;
 }
-.navigation_type_column {
-
-}
 
 .navigation__list {
   list-style: none;
@@ -23,10 +20,6 @@
 .navigation__list_type_column {
   flex-direction: column;
   align-items: center;
-}
-
-.navigation__element {
-  
 }
 
 .navigation__element_type_row {

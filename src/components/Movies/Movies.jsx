@@ -4,7 +4,6 @@ import SearchInput from "../SearchInput/SearchInput";
 import ContentContainer from '../ContentContainer/ContentContainer';
 import MoviesCardList from '../MoviesCardList/MoviesCardList'
 import ButtonMoreMovies from "../Buttons/ButtonMoreMovies/ButtonMoreMovies";
-import "./Movies.css";
 import Footer from "../Footer/Footer";
 import Preloader from "../Preloader/Preloader";
 const Movies = ({ movies, isLoading, innerWidth, isLoggedIn, isMobile, isMenuToggle }) => {

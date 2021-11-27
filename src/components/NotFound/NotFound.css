@@ -23,6 +23,11 @@
   font-size: 14px;
   line-height: 17px;
   color: #3456F3;
+  transition: opacity 0.4s linear;
+  cursor: pointer;
+}
+.error__button-back:hover {
+  opacity: 0.6;
 }
 
 @media screen and (max-width: 1000px) {

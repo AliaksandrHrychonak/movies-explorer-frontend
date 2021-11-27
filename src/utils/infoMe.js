@@ -23,15 +23,15 @@ export const infoMe = {
   projects: [
     {
       name: 'Статичный сайт',
-      link: '',
+      link: 'https://aliaksandrhrychonak.github.io/How-to-learn/',
     },
     {
       name: 'Адаптивный сайт',
-      link: '',
+      link: 'https://aliaksandrhrychonak.github.io/russian-travel/',
     },
     {
       name: 'Одностраничное приложение',
-      link: '',
+      link: 'https://alexgrichenokmesto.nomoredomains.monster/sign-in',
     },
   ]
 }

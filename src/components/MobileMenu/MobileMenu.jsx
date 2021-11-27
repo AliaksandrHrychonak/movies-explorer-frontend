@@ -10,7 +10,7 @@ const MobileMenu = ({ isOpen, isLoggedIn, isMobile, isMenuToggle }) => {
       <div className="mobile-menu__content" onClick={(e) => e.stopPropagation()}>
         <ButtonCross event={isMenuToggle} />
         <Navigation row={false} toggleMenu={isMenuToggle}/>
-        <AccountBar isLoggedIn={isLoggedIn} isMobile={isMobile} accountBarMenu={false} onClick={isMenuToggle}/>
+        <AccountBar isLoggedIn={isLoggedIn} isMobile={isMobile} accountBarMenu={false} isMenuToggle={isMenuToggle}/>
       </div>
     </aside>
   );

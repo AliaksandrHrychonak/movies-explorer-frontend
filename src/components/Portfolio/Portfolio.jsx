@@ -3,7 +3,6 @@ import './Portfolio.css'
 import EntryTitle from '../EntryTitle/EntryTitle';
 import { infoMe } from '../../utils/infoMe'
 import arrow from '../../images/arrow-link.svg'
-import { Link } from 'react-router-dom';
 
 const Portfolio = () => {
   return (
@@ -23,26 +22,26 @@ const Portfolio = () => {
           <li className="portfolio__element">
             {
               infoMe.links.map((e) =>
-              <Link to={e.link} className="portfolio__social-link" key={e.name}>
+              <a href={e.link} className="portfolio__social-link" key={e.name} target="_blank" rel="noopener noreferrer">
                 {e.name}
-              </Link>
+              </a>
               )
             }
           </li>
         </ul>
-        <Link to={infoMe.avatar.link}>
+        <a href={infoMe.avatar.link} target="_blank" rel="noopener noreferrer">
           <img src={infoMe.avatar.path} alt={infoMe.avatar.alt} className="portfolio__avatar"/>
-        </Link>
+        </a>
       </article>
       <ul className="portfolio__projects">
         <h5 className="portfolio__project-title">Портфолио</h5>
         {
           infoMe.projects.map((e) => 
             <li className="portfolio__project" key={e.name}>
-              <Link className="portfolio__project-link" to={e.link}>
+              <a className="portfolio__project-link" href={e.link} target="_blank" rel="noopener noreferrer">
                 <p className="portfolio__project-name">{e.name}</p>
                 <img src={arrow} alt="Перейти по ссылке" className="portfolio__project-arrow" />
-              </Link>
+              </a>
             </li>
           )
         }

@@ -3,10 +3,6 @@
   flex-direction: column;
 }
 
-.main_type_landing {
-
-}
-
 .main_type_movies {
   width: calc(100% - 140px);
   padding: 70px 70px;

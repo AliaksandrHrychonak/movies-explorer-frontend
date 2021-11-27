@@ -74,10 +74,6 @@
   }
 }
 
-@media screen and (max-width: 767px) {
-  
-}
-
 @media screen and (max-width: 450px) {
   .card__image {
     height: 168px;

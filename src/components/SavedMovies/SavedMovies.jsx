@@ -1,5 +1,4 @@
 import { React, useState } from 'react';
-import './SavedMovies.css'
 import Header from "../Header/Header";
 import SearchInput from "../SearchInput/SearchInput";
 import ContentContainer from '../ContentContainer/ContentContainer';
