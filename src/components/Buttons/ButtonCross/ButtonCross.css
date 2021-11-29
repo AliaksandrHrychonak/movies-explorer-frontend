@@ -1,0 +1,35 @@
+.button__cross {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 22px;
+  height: 22px;
+  transition: opacity 0.4s;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+
+.button__cross:before,
+.button__cross:after {
+  position: absolute;
+  top: -3px;
+  left: 9.5px;
+  content: ' ';
+  height: 128%;
+  width: 3px;
+  background-color: #000000;
+}
+
+.button__cross:before {
+  transform: rotate(45deg);
+}
+
+.button__cross:after {
+  transform: rotate(-45deg);
+}
+
+.button__cross:hover {
+  opacity: 0.6;
+}

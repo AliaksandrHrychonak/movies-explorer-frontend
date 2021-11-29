@@ -1,0 +1,12 @@
+.page {
+  font-family: 'Inter','Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-style: normal;
+  font-size: 14px;
+  font-weight: 400;
+  color: #000000;
+  margin: 0;
+  width: 100%;
+  max-width: 1280px;
+  text-rendering: optimizeLegibility;
+  min-height: 100vh;
+}
