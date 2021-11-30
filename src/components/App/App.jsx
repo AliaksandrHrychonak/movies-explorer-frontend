@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Main from "../Main/Main";
 import NotFound from "../NotFound/NotFound";
@@ -10,16 +10,21 @@ import Profile from "../Profile/Profile";
 import MobileMenu from "../MobileMenu/MobileMenu";
 import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
-import { api } from "../../utils/Api";
+import { api } from "../../utils/MainApi";
 import { moviesApi } from "../../utils/MoviesApi";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { RequireAuth } from "../RequireAuth/RequireAuth";
+import ErrorPopup from "../ErrorPopup/ErrorPopup";
 const App = () => {
   let navigate = useNavigate();
-
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [movies, setMovies] = useState([]);
+  const [isErrorPopup, setIsErrorPopup] = useState({
+    open: false,
+    status: false,
+    message: "",
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isWindowDimension, setIsWindowDimension] = useState(window.innerWidth);
@@ -46,58 +51,121 @@ const App = () => {
   }, []);
 
   useEffect(() => {
+    checkAuth();
+    if(isLoggedIn) {
+      getMovies()
+    }
+    console.log('tyt');
+  }, [isLoggedIn]);
+
+  const checkAuth = () => {
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      api
+        .getUserMe(token)
+        .then((data) => {
+          if (data) {
+            setCurrentUser({
+              name: data.name,
+              email: data.email,
+            });
+            setIsLoggedIn(true);
+            console.log('isAuthGood');
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
+  const getMovies = () => {
     setIsLoading(true);
     moviesApi
-      .getMovies()
-      .then((data) => {
-        setMovies(data);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+    .getMovies()
+    .then((data) => {
+      setMovies(data);
+      setIsLoading(false);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(setIsLoading(false))
+  }
 
   const handleRegistration = (data) => {
+    console.log(data);
     api
-      .registration(data)
+      .registration(data.name, data.email, data.password)
+      .then((data) => {
+        if (data) {
+          setIsErrorPopup({
+            open: true,
+            status: true,
+            message: "Регистрация прошла успешно!",
+          });
+          navigate("/sign-in");
+        }
+      })
+      .catch((err) => {
+        console.log(err.status);
+      });
+  };
+
+  const handleLogin = (data) => {
+    api
+      .login(data.email, data.password)
       .then((res) => {
         console.log(res);
-        setCurrentUser({
-          name: res.name,
-          email: res.email,
-          password: res.passsword,
-        });
-        navigate("/sign-in");
+        api
+          .getUserMe(res.token)
+          .then((data) => {
+            setCurrentUser({
+              name: data.name,
+              email: data.email,
+            });
+            setIsLoggedIn(true);
+            navigate("/");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  const handleLogin = (data) => {
-    console.log(data);
-    api
-      .login(data)
-      .then((res) => {
-        console.log(res);
-        setCurrentUser({
-          name: res.name,
-          email: data.email,
-          password: data.passsword,
-        });
-      })
-      .catch((err) => {
-        console.log(err);
+
+  const handleUpdateUserInfo = (data) => {
+    setIsLoading(true)
+    api.updateUserMe(data)
+    .then((res) => {
+      setCurrentUser({
+        name: res.name,
+        email: res.email,
       });
+      setIsLoading(false)
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(setIsLoading(false))
+  }
+
+  const handleLogOut = () => {
+    console.log('logout');
+    setIsLoggedIn(false);
+    setCurrentUser(null);
+    localStorage.removeItem("jwt");
+    navigate("/");
+  };
+
+  const handleClosePopup = () => {
+    setIsErrorPopup({ open: false, status: false, message: "" });
   };
 
   const handleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-
-  const user = {
-    name: "Виталий",
-    email: "pochta@yandex.ru",
   };
 
   return (
@@ -156,10 +224,12 @@ const App = () => {
                 isLoggedIn={isLoggedIn}
                 children={
                   <Profile
-                    user={user}
+                    user={currentUser}
                     isLoggedIn={isLoggedIn}
                     isMobile={isMobile}
                     isMenuToggle={handleMobileMenu}
+                    onLogOut={handleLogOut}
+                    onEdit={handleUpdateUserInfo}
                   />
                 }
               />
@@ -178,6 +248,7 @@ const App = () => {
           isMobile={isMobile}
           isMenuToggle={handleMobileMenu}
         />
+        <ErrorPopup config={isErrorPopup} onClose={handleClosePopup} />
       </div>
     </CurrentUserContext.Provider>
   );

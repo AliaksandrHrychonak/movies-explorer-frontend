@@ -8,30 +8,28 @@ class Api {
     if (res.ok) {
       return res.json();
     }
-    return Promise.reject(`Ошибка ${res.status}`);
+    return Promise.reject(res.status);
   }
 
-  registration(data) {
+  registration(name, email, password) {
     return fetch(`${this._url}/signup`, {
       method: 'POST',
       headers: this._headers,
-      body: JSON.stringify(data.name, data.email, data.password)
+      body: JSON.stringify({name, email, password})
     })
     .then(this._handleResponse)
   }
 
-  login(data) {
+  login(email, password) {
+    console.log(`email-${email}, password-${password}`);
     return fetch(`${this._url}/signin`, {
       method: 'POST',
       headers: this._headers,
-      body: JSON.stringify(data.email, data.password),
-      credentials: 'include'
+      body: JSON.stringify({email, password}),
     })
-    
     .then(this._handleResponse)
     .then((data) => {
       if (data.token){
-        console.log(data.token);
         localStorage.setItem('jwt', data.token);
         return data;
       }
@@ -51,7 +49,7 @@ class Api {
   }
 
   getUserMe = (token) => {
-    return fetch(`${this._baseUrl}/users/me`, {
+    return fetch(`${this._url}/users/me`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -81,5 +79,6 @@ export const api = new Api({
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
+    'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
   }
 });

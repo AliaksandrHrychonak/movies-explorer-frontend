@@ -3,15 +3,15 @@ import { Link } from "react-router-dom";
 import useForm from "../../hooks/useForm";
 
 const LoginForm = ({ onLogin }) => {
-  const { values, errors, checkValidity, handleChange, isValid } = useForm();
-
+  const { values, handleChange, errors, isValid, resetForm } = useForm();
+  
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(isValid);
-    if (checkValidity(e)) {
+    if (isValid) {
       onLogin(values);
+      resetForm()
     }
-    return;
+    return
   };
 
   return (

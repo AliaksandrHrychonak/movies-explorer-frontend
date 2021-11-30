@@ -4,12 +4,13 @@ import { Link } from "react-router-dom";
 import useForm from "../../hooks/useForm";
 
 const RegistrationForm = ({ onRegistartion }) => {
-  const { values, errors, checkValidity, handleChange, isValid } = useForm();
+  const { values, handleChange, errors, isValid, resetForm } = useForm();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (checkValidity(e)) {
+    if (isValid) {
       onRegistartion(values);
+      resetForm()
     }
     return
   };

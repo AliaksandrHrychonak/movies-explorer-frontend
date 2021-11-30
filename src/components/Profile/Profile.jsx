@@ -4,7 +4,7 @@ import Header from "../Header/Header";
 import ProfileForm from "../ProfileFrom/ProfileForm";
 import ContentContainer from "../ContentContainer/ContentContainer";
 
-const Profile = ({ user, isLoggedIn, isMobile, isMenuToggle }) => {
+const Profile = ({ user, isLoggedIn, onLogOut, isMobile, isMenuToggle, onEdit }) => {
   return (
     <>
       <Header
@@ -15,7 +15,7 @@ const Profile = ({ user, isLoggedIn, isMobile, isMenuToggle }) => {
       <ContentContainer type="profile">
         <section className="profile">
           <h1 className="profile__title">{`Привет, ${user.name}!`}</h1>
-          <ProfileForm name={user.name} email={user.email} />
+          <ProfileForm name={user.name} email={user.email} onLogOut={onLogOut} onEdit={onEdit} />
         </section>
       </ContentContainer>
     </>
