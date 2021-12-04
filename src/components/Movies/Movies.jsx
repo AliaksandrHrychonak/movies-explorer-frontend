@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect, useCallback } from "react";
 import Header from "../Header/Header";
 import SearchInput from "../SearchInput/SearchInput";
 import ContentContainer from '../ContentContainer/ContentContainer';
@@ -6,17 +6,39 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList'
 import ButtonMoreMovies from "../Buttons/ButtonMoreMovies/ButtonMoreMovies";
 import Footer from "../Footer/Footer";
 import Preloader from "../Preloader/Preloader";
-const Movies = ({ movies, isLoading, innerWidth, isLoggedIn, isMobile, isMenuToggle }) => {
-  const [valueButtonSwitch, setValueButtonSwitch] = useState(true)
-  const countMovies = () => {
-    let count = 12;
-    if(innerWidth <= 450){
-      count = 4
-    } else if (innerWidth <= 900) {
-      count = 8
-    }
-    return count
+// UTILS
+import { filterByKeyword, filterMoviesDuration } from "../../utils/filterMovieHelpers";
+
+const Movies = ({ movies, moviesSavedUser, configDisplayMovies, isLoading, isLoggedIn, isMobile, isMenuToggle, handleSaveMovieUser }) => {
+  const [valueButtonSwitch, setValueButtonSwitch] = useState(false)
+  const [isRenderCount, setIsRenderCount] = useState(configDisplayMovies.count)
+  const [isMovieFilterDuration, setisMovieFilterDuration] = useState([])
+
+  const setMoviesFilter = useCallback(
+    () => {
+      if(valueButtonSwitch) {
+        setisMovieFilterDuration(filterMoviesDuration(movies))
+      } else {
+        setisMovieFilterDuration(movies)
+      }
+    },
+    [movies, valueButtonSwitch],
+  )
+
+  useEffect(() => {
+    setMoviesFilter()
+    setIsRenderCount(configDisplayMovies.count)
+  }, [configDisplayMovies.count, setMoviesFilter])
+
+  // Подгрузка новых карточек
+  const handleRenderMore = () => {
+    setIsRenderCount(isRenderCount + configDisplayMovies.increase)
   }
+  
+  const handleSeacrhMovieByKeyword = (keyword) => {
+    setisMovieFilterDuration(filterByKeyword(isMovieFilterDuration, keyword))
+  }
+
   return (
     <>
       <Header
@@ -25,17 +47,19 @@ const Movies = ({ movies, isLoading, innerWidth, isLoggedIn, isMobile, isMenuTog
         isMenuToggle={isMenuToggle}
       />
       <ContentContainer type="movies" >
-          <SearchInput 
+          <SearchInput
+            setMoviesFilter={setMoviesFilter}
             stateCheckBox={valueButtonSwitch}
             toogleCheckBox={() => setValueButtonSwitch(!valueButtonSwitch)}
+            onSearch={handleSeacrhMovieByKeyword}
           />
         { isLoading
-          ? 
+          ?
             <Preloader />
           :
           <>
-            <MoviesCardList movies={movies} count={countMovies()} locationMovies={true} />
-            <ButtonMoreMovies />
+            <MoviesCardList movies={isMovieFilterDuration} moviesSavedUser={moviesSavedUser} count={isRenderCount} locationMovies={true} onSave={handleSaveMovieUser} />
+            { isRenderCount <= isMovieFilterDuration.length && <ButtonMoreMovies onClick={handleRenderMore} /> }
           </>
         }
       </ContentContainer>

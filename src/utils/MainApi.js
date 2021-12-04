@@ -60,8 +60,32 @@ class Api {
     .then(this._handleResponse)
   }
 
-  getApiMovies() {
-    return fetch(`${this._url}/movies`, {})
+  getUserMovies() {
+    return fetch(`${this._url}/movies`, {
+      method: 'GET',
+      headers: this._headers
+    })
+    .then(this._handleResponse)
+  }
+
+  savedMovieUser(data) {
+    return fetch(`${this._url}/movies`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify({
+        country: data.country,
+        director: data.director,
+        description: data.description,
+        duration: data.duration,
+        image: data.image,
+        trailer: data.trailer,
+        thumbnail: data.thumbnail,
+        movieId: data.movieId,
+        nameRU: data.nameRU,
+        nameEN: data.nameEN,
+        year: data.year,
+    }),
+    })
     .then(this._handleResponse)
   }
 

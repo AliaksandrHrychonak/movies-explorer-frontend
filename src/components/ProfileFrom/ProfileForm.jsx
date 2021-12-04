@@ -24,12 +24,16 @@ const ProfileForm = ({ name, email, onEdit, onLogOut }) => {
           minLength="2"
           maxLength="30"
           onChange={handleChange}
-          value={values.name || ''}
+          value={values.name || ""}
           placeholder={name}
           className="form-profile__input"
         />
       </label>
-      <span className={`form__error ${errors.name && "form__error_type_visible"}`}>
+      <span
+        className={`form__error form__error_type_profile ${
+          errors.name && "form__error_type_visible"
+        }`}
+      >
         {errors.name}
       </span>
       <hr className="form-profile__line" />
@@ -38,17 +42,35 @@ const ProfileForm = ({ name, email, onEdit, onLogOut }) => {
         <input
           type="email"
           name="email"
+          required
           onChange={handleChange}
-          value={values.email || ''}
+          value={values.email || ""}
           placeholder={email}
           className="form-profile__input"
         />
       </label>
-      <span className={`form__error ${errors.email && "form__error_type_visible"}`}>
+      <span
+        className={`form__error form__error_type_profile ${
+          errors.email && "form__error_type_visible"
+        }`}
+      >
         {errors.email}
       </span>
-      <button disabled={!isValid} className={`form-profile__button ${isValid ? '' : ''}`}>Редактировать</button>
-      <button className="form-profile__button form-profile__button_theme_red" onClick={onLogOut}>
+
+      <button
+        disabled={!isValid}
+        className={`form-profile__button ${
+          isValid
+            ? "form-profile__button_type_active"
+            : "form-profile__button_type_disabled"
+        }`}
+      >
+        Редактировать
+      </button>
+      <button
+        className="form-profile__button form-profile__button_theme_red"
+        onClick={onLogOut}
+      >
         Выйти из аккаунта
       </button>
     </form>

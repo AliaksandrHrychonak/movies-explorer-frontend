@@ -1,16 +1,34 @@
-import React from 'react';
-import './SearchInput.css'
-import SwitchButton from '../Buttons/SwitchButton/SwitchButton'
-import searchIcon from '../../images/search-icon.svg'
-import searchIconBlack from '../../images/search-icon-black.svg'
-const SearchInput = ({ stateCheckBox, toogleCheckBox }) => {
+import { React, useEffect } from 'react';
+import './SearchInput.css';
+import SwitchButton from '../Buttons/SwitchButton/SwitchButton';
+import searchIcon from '../../images/search-icon.svg';
+import searchIconBlack from '../../images/search-icon-black.svg';
+import useForm from "../../hooks/useForm";
+const SearchInput = ({ stateCheckBox, toogleCheckBox, onSearch, setMoviesFilter }) => {
+  const { values, handleChange, errors, isValid, resetForm } = useForm();
+
+  useEffect(() => {
+    if(values.film === '') {
+      setMoviesFilter()
+      resetForm()
+    }
+  }, [resetForm, setMoviesFilter, values.film])
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (isValid) {
+      onSearch(values.film);
+    }
+    return;
+  };
 
   return (
     <section className="search">
-      <form className="form-search">
+      <form className="form-search" noValidate onSubmit={handleSubmit}>
         <label htmlFor="" className="form-search__label" style={{backgroundImage:  `url(${searchIconBlack})`}} />
-        <input type="text" className="form-search__input" placeholder="Фильм"/>
-        <button className="form-search__button" style={{backgroundImage:  `url(${searchIcon})`}}/>
+        <input type="text" name="film" required className="form-search__input" placeholder="Фильм" value={values.film || ''} onChange={handleChange} autoComplete="off" />
+        <button disabled={!isValid} className={`form-search__button ${isValid ? 'form-search__button_type_active' : 'form-search__button_type_disabled' }`} style={{backgroundImage:  `url(${searchIcon})`}}/>
+        <span className={`form__error form__error_type_search ${errors.film && "form__error_type_visible"}`}>{errors.film}</span>
       </form>
       <SwitchButton state={stateCheckBox} onChange={toogleCheckBox} />
     </section>
