@@ -16,6 +16,7 @@ import ErrorPopup from "../ErrorPopup/ErrorPopup";
 //UTILS
 import { mapMovieApi } from '../../utils/moviesHelper';
 import { getItemLocal, setItemLocal, parseData, removeItemLocal, clearItemsLocal } from '../../utils/localStorageHelpers';
+import { filterMovieDelete, updatesArrayMovies } from '../../utils/filterMovieHelpers'
 import { config } from '../../utils/configDisplayContent';
 import { configMessages } from '../../utils/configUserMessage';
 import { api } from "../../utils/MainApi";
@@ -84,9 +85,11 @@ const App = () => {
       api
         .getUserMe(token)
         .then((data) => {
+          console.log(data);
           setCurrentUser({
             name: data.name,
             email: data.email,
+            id: data.id,
           });
           setIsLoggedIn(true);
         })
@@ -97,7 +100,6 @@ const App = () => {
     }
   }, []);
 
-// Дописать сверку массива из апи и локального хранилища
   const getMovies = useCallback(
     () => {
       setIsLoading(true);
@@ -106,7 +108,6 @@ const App = () => {
         moviesApi
           .getMovies()
           .then((data) => {
-            console.log(data);
             const movies = mapMovieApi(data)
             setMovies(movies);
             setItemLocal('movies', movies);
@@ -126,35 +127,37 @@ const App = () => {
     [],
   )
 
-// Дописать сверку массива из апи и локального хранилища
-const getSavedMoviesUser = useCallback(
-  () => {
-    setIsLoading(true);
-    const userMoviesLocal = getItemLocal("movies-saved");
-    if(!userMoviesLocal) {
-      api
-      .getUserMovies()
-      .then((data) => {
-        setIsMoviesSavedUser(data);
-        setItemLocal('movies-saved', data);
+  const getSavedMoviesUser = useCallback(
+    () => {
+      setIsLoading(true);
+      const userMoviesLocal = getItemLocal("movies-saved");
+      if(!userMoviesLocal) {
+        api
+        .getUserMovies()
+        .then((data) => {
+          const currentUserMovies = data.filter(item => item._id === currentUser.id)
+          setIsMoviesSavedUser(data);
+          setItemLocal('movies-saved', data);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          setIsLoading(false);
+          handleOpenPopup(false, configMessages.GET_USERFILM_ERROR)
+          console.log(err);
+        })
+      } else {
+        const moviesUser = parseData(userMoviesLocal)
+        setIsMoviesSavedUser(moviesUser);
         setIsLoading(false);
-      })
-      .catch((err) => {
-        setIsLoading(false);
-        handleOpenPopup(false, configMessages.GET_USERFILM_ERROR)
-        console.log(err);
-      })
-    } else {
-      const moviesUser = parseData(userMoviesLocal)
-      setIsMoviesSavedUser(moviesUser);
-      setIsLoading(false);
-    }
-  },
-  [],
-)
+      }
+    },
+    [],
+  )
 
   useEffect(() => {
-    checkAuth();
+    if(!isLoggedIn) {
+      checkAuth();
+    }
     if (isLoggedIn && (location.pathname === '/movies' || location.pathname === '/saved-movies')) {
       getMovies();
       getSavedMoviesUser()
@@ -184,9 +187,11 @@ const getSavedMoviesUser = useCallback(
         api
           .getUserMe(res.token)
           .then((data) => {
+            console.log(data);
             setCurrentUser({
               name: data.name,
               email: data.email,
+              id: data.id
             });
             setIsLoggedIn(true);
             navigate("/movies");
@@ -210,6 +215,7 @@ const getSavedMoviesUser = useCallback(
         setCurrentUser({
           name: res.name,
           email: res.email,
+          id: res.id,
         });
         setIsLoading(false);
         handleOpenPopup(true, configMessages.UPDATE_USER_OK)
@@ -221,19 +227,22 @@ const getSavedMoviesUser = useCallback(
   };
 
   const handleLogOut = () => {
-    setIsLoggedIn(false);
-    setCurrentUser(null);
     clearItemsLocal();
+    setCurrentUser(null);
+    setIsLoggedIn(false);
     navigate("/");
     handleOpenPopup(true, configMessages.LOGOUT_OK)
   };
 
   const handleDeleteSavedMovie = (movie) => {
-    api
-      .deleteMovie(movie._id)
+    const movieDelete = isMoviesSavedUser.find(item => item.movieId === movie.movieId)
+    const beatFilmItem = movies.find(item => item.movieId === movie.movieId)
+    if( movieDelete.movieId === beatFilmItem.movieId) {
+      api
+      .deleteMovie(movieDelete._id)
       .then(() => {
         removeItemLocal('movies-saved')
-        const newArray = isMoviesSavedUser.filter(item => item !== movie)
+        const newArray = filterMovieDelete(isMoviesSavedUser, movie)
         setIsMoviesSavedUser(newArray)
         setItemLocal('movies-saved', newArray)
         handleOpenPopup(true, configMessages.DELETE_MOVIE_OK)
@@ -242,15 +251,23 @@ const getSavedMoviesUser = useCallback(
         handleOpenPopup(false, configMessages.DELETE_MOVIE_ERROR)
         console.log(err);
       })
+    }
   }
  
   const handleSavedMovie = (movie) => {
     api
       .savedMovieUser(movie)
       .then((data) => {
+        const newArrayAllMovies = updatesArrayMovies(movies, data)
+
+        setMovies(newArrayAllMovies)
+        removeItemLocal('movies')
+        setItemLocal('movies', newArrayAllMovies)
+
         setIsMoviesSavedUser([...isMoviesSavedUser, data])
         removeItemLocal('movies-saved')
         setItemLocal('movies-saved', [...isMoviesSavedUser, data]);
+        
         handleOpenPopup(true, configMessages.SAVE_MOVIE_OK)
       })
       .catch((err) => {
@@ -270,6 +287,10 @@ const getSavedMoviesUser = useCallback(
   const handleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
+
+  const handleHistoryBack = () => {
+    navigate(-1)
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -300,6 +321,7 @@ const getSavedMoviesUser = useCallback(
                     isMobile={isMobile}
                     isMenuToggle={handleMobileMenu}
                     handleSaveMovieUser={handleSavedMovie}
+                    handleDeleteSavedMovie={handleDeleteSavedMovie}
                   />
                 }
               />
@@ -344,7 +366,7 @@ const getSavedMoviesUser = useCallback(
           />
           <Route path="/sign-in" element={<Login onLogin={handleLogin} />} />
           <Route path="/sign-up" element={<Register onRegistration={handleRegistration} />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<NotFound onClick={handleHistoryBack} />} />
         </Routes>
         <MobileMenu
           isLoggedIn={isLoggedIn}
@@ -352,7 +374,7 @@ const getSavedMoviesUser = useCallback(
           isMobile={isMobile}
           isMenuToggle={handleMobileMenu}
         />
-        <ErrorPopup config={isErrorPopup} onClose={handleClosePopup} />
+        <ErrorPopup config={isErrorPopup} onClose={handleClosePopup} /> 
       </div>
     </CurrentUserContext.Provider>
   );

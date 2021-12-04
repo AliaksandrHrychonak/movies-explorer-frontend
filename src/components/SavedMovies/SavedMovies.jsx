@@ -43,13 +43,18 @@ const SavedMovies = ({ moviesSavedUser, configDisplayMovies, isLoading, isLogged
         isMenuToggle={isMenuToggle}
       />
       <ContentContainer type="movies" >
-          <SearchInput
-            setMoviesFilter={setMoviesFilter}
-            stateCheckBox={valueButtonSwitch}
-            toogleCheckBox={() => setValueButtonSwitch(!valueButtonSwitch)}
-            onSearch={handleSeacrhMovieByKeyword}
-          />
-        <MoviesCardList movies={isMovieFilterDuration} count={isRenderCount} locationMovies={false} onDelete={onDeleteMovie} />
+        <SearchInput
+          setMoviesFilter={setMoviesFilter}
+          stateCheckBox={valueButtonSwitch}
+          toogleCheckBox={() => setValueButtonSwitch(!valueButtonSwitch)}
+          onSearch={handleSeacrhMovieByKeyword}
+        />
+        { isLoading ? 
+           'Ничего не найденно'
+          :
+          <MoviesCardList movies={isMovieFilterDuration} count={isRenderCount} locationMovies={false} onDelete={onDeleteMovie} />
+        }
+        
       </ContentContainer>
       <Footer />
     </>

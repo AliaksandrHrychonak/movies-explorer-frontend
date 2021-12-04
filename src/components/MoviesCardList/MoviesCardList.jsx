@@ -16,7 +16,7 @@ const MoviesCardList = ({ movies, moviesSavedUser, count, locationMovies, onSave
             locationMovies={locationMovies}
           />
         ) :
-          'Ничего не найдено'
+          <p className="movies__item-error">Ничего не найдено</p>
       }
       </div>
     </section>

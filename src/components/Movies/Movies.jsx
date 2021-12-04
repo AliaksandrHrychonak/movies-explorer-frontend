@@ -9,7 +9,7 @@ import Preloader from "../Preloader/Preloader";
 // UTILS
 import { filterByKeyword, filterMoviesDuration } from "../../utils/filterMovieHelpers";
 
-const Movies = ({ movies, moviesSavedUser, configDisplayMovies, isLoading, isLoggedIn, isMobile, isMenuToggle, handleSaveMovieUser }) => {
+const Movies = ({ movies, moviesSavedUser, configDisplayMovies, isLoading, isLoggedIn, isMobile, isMenuToggle, handleSaveMovieUser, handleDeleteSavedMovie }) => {
   const [valueButtonSwitch, setValueButtonSwitch] = useState(false)
   const [isRenderCount, setIsRenderCount] = useState(configDisplayMovies.count)
   const [isMovieFilterDuration, setisMovieFilterDuration] = useState([])
@@ -56,11 +56,11 @@ const Movies = ({ movies, moviesSavedUser, configDisplayMovies, isLoading, isLog
         { isLoading
           ?
             <Preloader />
-          :
+          : 
           <>
-            <MoviesCardList movies={isMovieFilterDuration} moviesSavedUser={moviesSavedUser} count={isRenderCount} locationMovies={true} onSave={handleSaveMovieUser} />
+            <MoviesCardList movies={isMovieFilterDuration} moviesSavedUser={moviesSavedUser} count={isRenderCount} locationMovies={true} onSave={handleSaveMovieUser} onDelete={handleDeleteSavedMovie} />
             { isRenderCount <= isMovieFilterDuration.length && <ButtonMoreMovies onClick={handleRenderMore} /> }
-          </>
+          </> 
         }
       </ContentContainer>
       <Footer />

@@ -27,6 +27,7 @@ const ProfileForm = ({ name, email, onEdit, onLogOut }) => {
           value={values.name || ""}
           placeholder={name}
           className="form-profile__input"
+          autoComplete="off"
         />
       </label>
       <span
@@ -47,6 +48,7 @@ const ProfileForm = ({ name, email, onEdit, onLogOut }) => {
           value={values.email || ""}
           placeholder={email}
           className="form-profile__input"
+          autoComplete="off"
         />
       </label>
       <span
@@ -58,9 +60,9 @@ const ProfileForm = ({ name, email, onEdit, onLogOut }) => {
       </span>
 
       <button
-        disabled={!isValid}
+        disabled={!isValid || !(values.name !== name && values.email !== email)}
         className={`form-profile__button ${
-          isValid
+          isValid && (values.name !== name && values.email !== email)
             ? "form-profile__button_type_active"
             : "form-profile__button_type_disabled"
         }`}

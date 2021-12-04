@@ -13,9 +13,6 @@
   font-size: 11px;
   line-height: 13px;
 }
-.form-profile__label:last-of-type {
-  
-}
 
 .form-profile__input {
   width: calc(100% - 10%);
@@ -27,6 +24,10 @@
   font-weight: 400;
   text-align: right;
   background-color: transparent;
+}
+
+.form-profile__input::placeholder {
+  color: rgb(49, 49, 49);
 }
 
 .form-profile__input:focus {

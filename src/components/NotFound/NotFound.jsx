@@ -1,6 +1,6 @@
 import React from 'react';
 import './NotFound.css'
-const NotFound = () => {
+const NotFound = ({onClick}) => {
   return (
     <section className="error">
       <h1 className="error__title">
@@ -10,7 +10,7 @@ const NotFound = () => {
         Страница не найдена
       </p>
 
-      <span className="error__button-back">Назад</span>
+      <span className="error__button-back" onClick={onClick}>Назад</span>
     </section>
   );
 }

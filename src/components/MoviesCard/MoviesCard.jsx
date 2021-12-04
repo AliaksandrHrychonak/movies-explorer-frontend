@@ -14,7 +14,7 @@ const MoviesCard = ({ movie, isSavedCard, locationMovies, onSave, onDelete}) => 
 
   return (
       <article className="card">
-        <ButtonIsSaveMovie isSaved={isSavedCard} toggleSave={handleSaveMovie} onDelete={handleDeleteMovie} locationMovies={locationMovies} movie={movie} />
+        <ButtonIsSaveMovie isSaved={isSavedCard} onSave={handleSaveMovie} onDelete={handleDeleteMovie} locationMovies={locationMovies} movie={movie} />
         <a href={movie.trailer} className="card-link" target="_blank" rel="noopener noreferrer">
           <img src={movie.image} alt={movie.nameRU} className="card__image" />
         </a>
