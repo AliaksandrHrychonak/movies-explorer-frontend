@@ -5,11 +5,13 @@ const useForm = () => {
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false)
 
+  const reqEx = (value) => value.replace(/ +/g, ' ').trim()
+
   const handleChange = (event) => {
     const target = event.target;
     const name = target.name;
     const value = target.value;
-    setValues({...values, [name]: value});
+    setValues({...values, [name]: reqEx(value) });
     setErrors({...errors, [name]: target.validationMessage });
     setIsValid(target.closest("form").checkValidity());
   };

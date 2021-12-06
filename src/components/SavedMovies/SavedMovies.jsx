@@ -20,7 +20,7 @@ const SavedMovies = ({ moviesSavedUser, configDisplayMovies, isLoading, isLogged
       const lastSearchMovies = parseData(getItemLocal('saved-film-search-result'))
       if(valueButtonSwitch) {
         if (lastSearchMovies) {
-          setisMovieFilterDuration(lastSearchMovies)
+          setisMovieFilterDuration(filterMoviesDuration(lastSearchMovies))
         } else {
           setisMovieFilterDuration(filterMoviesDuration(moviesSavedUser))
         }
