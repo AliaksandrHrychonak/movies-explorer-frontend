@@ -8,22 +8,40 @@ import Footer from "../Footer/Footer";
 import Preloader from "../Preloader/Preloader";
 // UTILS
 import { filterByKeyword, filterMoviesDuration } from "../../utils/filterMovieHelpers";
+import { parseData, setItemLocal, getItemLocal } from '../../utils/localStorageHelpers'
 
 const Movies = ({ movies, moviesSavedUser, configDisplayMovies, isLoading, isLoggedIn, isMobile, isMenuToggle, handleSaveMovieUser, handleDeleteSavedMovie }) => {
   const [valueButtonSwitch, setValueButtonSwitch] = useState(false)
   const [isRenderCount, setIsRenderCount] = useState(configDisplayMovies.count)
   const [isMovieFilterDuration, setisMovieFilterDuration] = useState([])
+  const lastSearchLocalKeyword = parseData(getItemLocal('beat-film-search-result-keyword'))
 
   const setMoviesFilter = useCallback(
     () => {
+      const lastSearchMovies = parseData(getItemLocal('beat-film-search-result'))
       if(valueButtonSwitch) {
-        setisMovieFilterDuration(filterMoviesDuration(movies))
+        if (lastSearchMovies) {
+          setisMovieFilterDuration(lastSearchMovies)
+        } else {
+          setisMovieFilterDuration(filterMoviesDuration(movies))
+        }
       } else {
-        setisMovieFilterDuration(movies)
+        if (lastSearchMovies) {
+          setisMovieFilterDuration(lastSearchMovies)
+        } else {
+          setisMovieFilterDuration(movies)
+        }
       }
     },
     [movies, valueButtonSwitch],
   )
+
+  useEffect(() => {
+    const switchButtonLocalStorage = parseData(getItemLocal('movies-switch-button'))
+    if(switchButtonLocalStorage) {
+      setValueButtonSwitch(switchButtonLocalStorage)
+    }
+  }, [])
 
   useEffect(() => {
     setMoviesFilter()
@@ -36,7 +54,15 @@ const Movies = ({ movies, moviesSavedUser, configDisplayMovies, isLoading, isLog
   }
   
   const handleSeacrhMovieByKeyword = (keyword) => {
-    setisMovieFilterDuration(filterByKeyword(isMovieFilterDuration, keyword))
+    const result = filterByKeyword(isMovieFilterDuration, keyword)
+    setisMovieFilterDuration(result)
+    setItemLocal('beat-film-search-result', result)
+    setItemLocal('beat-film-search-result-keyword', keyword)
+  }
+
+  const handleSwitchButton = () => {
+    setValueButtonSwitch(!valueButtonSwitch)
+    setItemLocal('movies-switch-button', !valueButtonSwitch)
   }
 
   return (
@@ -50,8 +76,9 @@ const Movies = ({ movies, moviesSavedUser, configDisplayMovies, isLoading, isLog
           <SearchInput
             setMoviesFilter={setMoviesFilter}
             stateCheckBox={valueButtonSwitch}
-            toogleCheckBox={() => setValueButtonSwitch(!valueButtonSwitch)}
+            toogleCheckBox={handleSwitchButton}
             onSearch={handleSeacrhMovieByKeyword}
+            lastSearchLocal={lastSearchLocalKeyword}
           />
         { isLoading
           ?

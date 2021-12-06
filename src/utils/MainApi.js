@@ -60,10 +60,14 @@ class Api {
     .then(this._handleResponse)
   }
 
-  getUserMovies() {
+  getUserMovies(token) {
     return fetch(`${this._url}/movies`, {
       method: 'GET',
-      headers: this._headers
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      }
     })
     .then(this._handleResponse)
   }
@@ -103,6 +107,6 @@ export const api = new Api({
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+    'Authorization': `Bearer ${localStorage.getItem("jwt")}`,
   }
 });

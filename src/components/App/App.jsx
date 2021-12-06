@@ -82,18 +82,20 @@ const App = () => {
   const checkAuth = useCallback(() => {
     const token = getItemLocal("jwt");
     if (token) {
+      setIsLoading(true)
       api
         .getUserMe(token)
         .then((data) => {
-          console.log(data);
           setCurrentUser({
             name: data.name,
             email: data.email,
-            id: data.id,
+            id: data._id,
           });
           setIsLoggedIn(true);
+          setIsLoading(false)
         })
         .catch((err) => {
+          setIsLoading(false)
           handleOpenPopup(false, configMessages.LOGIN_ERROR)
           console.log(err);
         });
@@ -128,16 +130,18 @@ const App = () => {
   )
 
   const getSavedMoviesUser = useCallback(
-    () => {
+    (id) => {
       setIsLoading(true);
+      const token = getItemLocal("jwt")
       const userMoviesLocal = getItemLocal("movies-saved");
       if(!userMoviesLocal) {
         api
-        .getUserMovies()
+        .getUserMovies(token)
         .then((data) => {
-          const currentUserMovies = data.filter(item => item._id === currentUser.id)
-          setIsMoviesSavedUser(data);
-          setItemLocal('movies-saved', data);
+          // получения только тех фильмов который сохранил User
+          const currentUserMovies = data.filter(item => item.owner === id)
+          setIsMoviesSavedUser(currentUserMovies);
+          setItemLocal('movies-saved', currentUserMovies);
           setIsLoading(false);
         })
         .catch((err) => {
@@ -155,14 +159,20 @@ const App = () => {
   )
 
   useEffect(() => {
+    if(currentUser && isLoggedIn && (location.pathname === '/movies' || location.pathname === '/saved-movies')) {
+      getMovies();
+      getSavedMoviesUser(currentUser.id)
+    }
+    if(isLoggedIn && (location.pathname === '/sign-in' || location.pathname === '/sign-up')) {
+      handleOpenPopup(true, configMessages.USER_IS_AUTH)
+    }
+  }, [currentUser, getMovies, getSavedMoviesUser, isLoggedIn, location.pathname, navigate]);
+
+  useEffect(() => {
     if(!isLoggedIn) {
       checkAuth();
     }
-    if (isLoggedIn && (location.pathname === '/movies' || location.pathname === '/saved-movies')) {
-      getMovies();
-      getSavedMoviesUser()
-    }
-  }, [checkAuth, getMovies, getSavedMoviesUser, isLoggedIn, location.pathname]);
+  }, [checkAuth, isLoggedIn])
 
   const handleRegistration = (data) => {
     api
@@ -183,26 +193,29 @@ const App = () => {
     api
       .login(data.email, data.password)
       .then((res) => {
-        console.log(res);
         api
           .getUserMe(res.token)
           .then((data) => {
-            console.log(data);
             setCurrentUser({
               name: data.name,
               email: data.email,
-              id: data.id
+              id: data._id
             });
             setIsLoggedIn(true);
-            navigate("/movies");
+            navigate('/movies')
             handleOpenPopup(true, configMessages.LOGIN_OK)
           })
           .catch((err) => {
-            handleOpenPopup(true, configMessages.LOGIN_ERROR)
+            handleOpenPopup(false, configMessages.LOGIN_ERROR)
             console.log(err);
           });
       })
       .catch((err) => {
+        if(err === 401) {
+          handleOpenPopup(false, configMessages.LOGIN_UNAUTHORIZED)
+        } else {
+          handleOpenPopup(false, configMessages.LOGIN_ERROR)
+        }
         console.log(err);
       });
   };
@@ -215,7 +228,6 @@ const App = () => {
         setCurrentUser({
           name: res.name,
           email: res.email,
-          id: res.id,
         });
         setIsLoading(false);
         handleOpenPopup(true, configMessages.UPDATE_USER_OK)
@@ -300,6 +312,7 @@ const App = () => {
             path="/"
             element={
               <Main
+                isLoading={isLoading}
                 isLoggedIn={isLoggedIn}
                 isMobile={isMobile}
                 isMenuToggle={handleMobileMenu}
@@ -309,6 +322,7 @@ const App = () => {
           <Route
             path="/movies"
             element={
+             isLoggedIn && 
               <ProtectedRoute
                 isLoggedIn={isLoggedIn}
                 children={
@@ -330,6 +344,7 @@ const App = () => {
           <Route
             path="/saved-movies"
             element={
+             isLoggedIn && 
               <ProtectedRoute
                 isLoggedIn={isLoggedIn}
                 children={
@@ -349,6 +364,7 @@ const App = () => {
           <Route
             path="/profile"
             element={
+             isLoggedIn &&
               <ProtectedRoute
                 isLoggedIn={isLoggedIn}
                 children={
@@ -364,8 +380,8 @@ const App = () => {
               />
             }
           />
-          <Route path="/sign-in" element={<Login onLogin={handleLogin} />} />
-          <Route path="/sign-up" element={<Register onRegistration={handleRegistration} />} />
+          <Route path="/sign-in" element={!isLoggedIn ? <Login onLogin={handleLogin}/> : <NotFound onClick={handleHistoryBack}/>} />
+          <Route path="/sign-up" element={!isLoggedIn ? <Register onRegistration={handleRegistration}/> : <NotFound onClick={handleHistoryBack}/> } />
           <Route path="*" element={<NotFound onClick={handleHistoryBack} />} />
         </Routes>
         <MobileMenu
