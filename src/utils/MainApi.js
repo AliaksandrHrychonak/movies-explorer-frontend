@@ -35,10 +35,14 @@ class Api {
     })
   }
 
-  updateUserMe(data) {
+  updateUserMe(data, token) {
     return fetch(`${this._url}/users/me`, {
       method: 'PATCH',
-      headers: this._headers,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
       body: JSON.stringify({
         name: data.name,
         email: data.email
@@ -71,10 +75,14 @@ class Api {
     .then(this._handleResponse)
   }
 
-  savedMovieUser(data) {
+  savedMovieUser(data, token) {
     return fetch(`${this._url}/movies`, {
       method: 'POST',
-      headers: this._headers,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
       body: JSON.stringify({
         country: data.country,
         director: data.director,
@@ -92,10 +100,14 @@ class Api {
     .then(this._handleResponse)
   }
 
-  deleteMovie(id) {
+  deleteMovie(id, token) {
     return fetch(`${this._url}/movies/${id}`, {
       method: 'DELETE',
-      headers: this._headers,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      }
     })
     .then(this._handleResponse)
   }
@@ -106,6 +118,5 @@ export const api = new Api({
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${localStorage.getItem("jwt")}`,
   }
 });

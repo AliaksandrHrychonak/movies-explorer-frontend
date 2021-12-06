@@ -221,9 +221,10 @@ const App = () => {
   };
 
   const handleUpdateUserInfo = (data) => {
+    const token = getItemLocal("jwt")
     setIsLoading(true);
     api
-      .updateUserMe(data)
+      .updateUserMe(data, token)
       .then((res) => {
         setCurrentUser({
           name: res.name,
@@ -247,11 +248,12 @@ const App = () => {
   };
 
   const handleDeleteSavedMovie = (movie) => {
+    const token = getItemLocal("jwt")
     const movieDelete = isMoviesSavedUser.find(item => item.movieId === movie.movieId)
     const beatFilmItem = movies.find(item => item.movieId === movie.movieId)
     if( movieDelete.movieId === beatFilmItem.movieId) {
       api
-      .deleteMovie(movieDelete._id)
+      .deleteMovie(movieDelete._id, token)
       .then(() => {
         removeItemLocal('movies-saved')
         const newArray = filterMovieDelete(isMoviesSavedUser, movie)
@@ -267,8 +269,9 @@ const App = () => {
   }
  
   const handleSavedMovie = (movie) => {
+    const token = getItemLocal("jwt")
     api
-      .savedMovieUser(movie)
+      .savedMovieUser(movie, token)
       .then((data) => {
         const newArrayAllMovies = updatesArrayMovies(movies, data)
 
