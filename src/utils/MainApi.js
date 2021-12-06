@@ -21,7 +21,6 @@ class Api {
   }
 
   login(email, password) {
-    console.log(`email-${email}, password-${password}`);
     return fetch(`${this._url}/signin`, {
       method: 'POST',
       headers: this._headers,

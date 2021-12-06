@@ -19,7 +19,6 @@ const Movies = ({ movies, moviesSavedUser, configDisplayMovies, isLoading, isLog
   const setMoviesFilter = useCallback(
     () => {
       const lastSearchMovies = parseData(getItemLocal('beat-film-search-result'))
-      console.log(lastSearchMovies);
       if(valueButtonSwitch) {
         if (lastSearchMovies) {
           setisMovieFilterDuration(filterMoviesDuration(lastSearchMovies))
