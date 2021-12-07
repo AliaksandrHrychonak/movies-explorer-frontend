@@ -23,7 +23,7 @@ const Footer = () => {
             </a>
           </li>
           <li className="footer__list_item">
-            <a href="https://github.com/AliaksandrHrychonak" className="footer__link" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.facebook.com/profile.php?id=100010777031212" className="footer__link" target="_blank" rel="noopener noreferrer">
               <p className="footer__subtitle">
                 Facebook
               </p>
