@@ -1,10 +1,9 @@
 import React from 'react';
 import './ButtonMoreMovies.css'
 
-const ButtonMoreMovies = ({ onClick }) => {
-  
+const ButtonMoreMovies = () => {
   return (
-    <button className="movies__button-more" onClick={onClick}>
+    <button className="movies__button-more">
       Ещё
     </button>
   );
