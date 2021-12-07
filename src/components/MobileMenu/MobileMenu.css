@@ -62,7 +62,6 @@
     display: flex;
   }
 }
-
 @media screen and (max-width: 450px) {
   .mobile-menu__content {
     max-width: calc(100% - 20px);
