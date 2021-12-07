@@ -60,3 +60,15 @@
     padding-top: 144px;
   }
 }
+
+@media screen and (max-height: 832px) {
+  .mobile-menu__content {
+    justify-content: space-around;
+  }
+}
+
+@media screen and (max-height: 632px) {
+  .mobile-menu__content {
+    justify-content: space-between;
+  }
+}
