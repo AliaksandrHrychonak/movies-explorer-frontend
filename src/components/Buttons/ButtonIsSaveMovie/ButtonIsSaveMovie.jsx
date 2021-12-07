@@ -2,19 +2,18 @@ import React from "react";
 import "./ButtonIsSaveMovie.css";
 import savedIcon from '../../../images/icon-saved.svg';
 import crossIcon from '../../../images/cross-icon.svg';
-const ButtonIsSaveMovie = ({ locationMovies, isSaved, toggleSaved }) => {
-
+const ButtonIsSaveMovie = ({ locationMovies, isSaved, onSave, onDelete }) => {
   return (
       locationMovies ?
       <button
-      style={isSaved ? {color: '#000'} : {backgroundImage: `url(${savedIcon})` }}
-      className={`movie-button ${ isSaved ? "movie-button_type_saved" : "movie-button_type_save" }`}
-      onClick={toggleSaved}
+      style={isSaved ? {backgroundImage: `url(${savedIcon})` } : {color: '#000'}}
+      className={`movie-button ${ isSaved ? "movie-button_type_save" :  "movie-button_type_saved" }`}
+      onClick={ isSaved ? onDelete : onSave }
       >
-      {isSaved ? "Сохранить" : ""}
+      {isSaved ? "" : "Сохранить"}
       </button>
       :
-      <button className="movie-button movie-button_type_delete" style={{backgroundImage: `url(${crossIcon})` }} />
+      <button onClick={onDelete} className="movie-button movie-button_type_delete" style={{backgroundImage: `url(${crossIcon})` }} />
   );
 };
 

@@ -2,10 +2,10 @@ import React from 'react';
 import AuthContainer from "../AuthContainer/AuthContainer";
 import RegistrationForm from '../Forms/RegistrationForm';
 
-const Register = () => {
+const Register = ({ onRegistration }) => {
   return (
     <AuthContainer title="Добро пожаловать!">
-      <RegistrationForm />
+      <RegistrationForm onRegistartion={onRegistration} />
     </AuthContainer>
   );
 }

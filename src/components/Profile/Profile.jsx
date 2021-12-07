@@ -3,8 +3,11 @@ import "./Profile.css";
 import Header from "../Header/Header";
 import ProfileForm from "../ProfileFrom/ProfileForm";
 import ContentContainer from "../ContentContainer/ContentContainer";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-const Profile = ({ user, isLoggedIn, isMobile, isMenuToggle }) => {
+const Profile = ({ isLoggedIn, onLogOut, isMobile, isMenuToggle, onEdit }) => {
+  const currentUser = React.useContext(CurrentUserContext)
+
   return (
     <>
       <Header
@@ -14,8 +17,8 @@ const Profile = ({ user, isLoggedIn, isMobile, isMenuToggle }) => {
       />
       <ContentContainer type="profile">
         <section className="profile">
-          <h1 className="profile__title">{`Привет, ${user.name}!`}</h1>
-          <ProfileForm name={user.name} email={user.email} />
+          <h1 className="profile__title">{`Привет, ${currentUser.name}!`}</h1>
+          <ProfileForm name={currentUser.name} email={currentUser.email} onLogOut={onLogOut} onEdit={onEdit} />
         </section>
       </ContentContainer>
     </>
