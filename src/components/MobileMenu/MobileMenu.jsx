@@ -9,8 +9,10 @@ const MobileMenu = ({ isOpen, isLoggedIn, isMobile, isMenuToggle }) => {
     <aside className={`mobile-menu ${ isOpen ?  'mobile-menu_type_visible ' : 'mobile-menu_type_hidden' }`} onClick={isMenuToggle}>
       <div className="mobile-menu__content" onClick={(e) => e.stopPropagation()}>
         <ButtonCross event={isMenuToggle} />
-        <Navigation row={false} toggleMenu={isMenuToggle}/>
-        <AccountBar isLoggedIn={isLoggedIn} isMobile={isMobile} accountBarMenu={false} isMenuToggle={isMenuToggle}/>
+        <div className="mobile-menu__content-container">
+          <Navigation row={false} toggleMenu={isMenuToggle}/>
+          <AccountBar isLoggedIn={isLoggedIn} isMobile={isMobile} accountBarMenu={false} isMenuToggle={isMenuToggle}/>
+        </div>
       </div>
     </aside>
   );
