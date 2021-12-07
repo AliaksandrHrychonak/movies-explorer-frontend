@@ -177,9 +177,9 @@ const App = () => {
   const handleRegistration = (data) => {
     api
       .registration(data.name, data.email, data.password)
-      .then((data) => {
-        if (data) {
-          navigate("/sign-in", { replace: true });
+      .then((res) => { 
+        if (res) {
+          handleLogin(data)
           handleOpenPopup(true, configMessages.REGISTRATION_OK)
         }
       })
@@ -325,7 +325,6 @@ const App = () => {
           <Route
             path="/movies"
             element={
-             isLoggedIn && 
               <ProtectedRoute
                 isLoggedIn={isLoggedIn}
                 children={
@@ -347,7 +346,6 @@ const App = () => {
           <Route
             path="/saved-movies"
             element={
-             isLoggedIn && 
               <ProtectedRoute
                 isLoggedIn={isLoggedIn}
                 children={
@@ -367,7 +365,6 @@ const App = () => {
           <Route
             path="/profile"
             element={
-             isLoggedIn &&
               <ProtectedRoute
                 isLoggedIn={isLoggedIn}
                 children={
