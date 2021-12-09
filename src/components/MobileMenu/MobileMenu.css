@@ -31,22 +31,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   z-index: 99;
   width: 100%;
   max-width: 65.11%;
   height: 100vh;
   padding: 159px 10px 13.44px;
   background-color: #fafafa;
-}
-
-.mobile-menu__content-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  height: 100%;
-  max-height: 400px;
 }
 
 .mobile-menu_type_visible {

@@ -2,10 +2,10 @@ import React from 'react';
 import AuthContainer from "../AuthContainer/AuthContainer";
 import LoginForm from '../Forms/LoginForm';
 
-const Login = ({onLogin}) => {
+const Login = () => {
   return (
     <AuthContainer title="Рады видеть!">
-      <LoginForm onLogin={onLogin}/>
+      <LoginForm />
     </AuthContainer>
   );
 }

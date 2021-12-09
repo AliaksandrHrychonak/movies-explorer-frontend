@@ -20,7 +20,6 @@
   margin: 40px 0;
 }
 
-
 @media screen and (max-width: 480px) {
   .auth__item {
     align-items: center;
