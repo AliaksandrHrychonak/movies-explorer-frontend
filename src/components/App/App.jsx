@@ -328,7 +328,7 @@ const App = () => {
               <ProtectedRoute
                 isLoggedIn={isLoggedIn}
                 children={
-                  <Movies
+                  isLoggedIn && <Movies
                     isLoggedIn={isLoggedIn}
                     movies={movies}
                     moviesSavedUser={isMoviesSavedUser}
@@ -349,7 +349,7 @@ const App = () => {
               <ProtectedRoute
                 isLoggedIn={isLoggedIn}
                 children={
-                  <SavedMovies
+                  isLoggedIn && <SavedMovies
                     moviesSavedUser={isMoviesSavedUser}
                     configDisplayMovies={isConfigMovies}
                     onDeleteMovie={handleDeleteSavedMovie}
@@ -368,7 +368,7 @@ const App = () => {
               <ProtectedRoute
                 isLoggedIn={isLoggedIn}
                 children={
-                  <Profile
+                  isLoggedIn && <Profile
                     user={currentUser}
                     isLoggedIn={isLoggedIn}
                     isMobile={isMobile}

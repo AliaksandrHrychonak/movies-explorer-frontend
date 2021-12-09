@@ -20,7 +20,6 @@ const ProfileForm = ({ name, email, onEdit, onLogOut }) => {
         <input
           type="text"
           name="name"
-          required
           minLength="2"
           maxLength="30"
           onChange={handleChange}
@@ -43,7 +42,6 @@ const ProfileForm = ({ name, email, onEdit, onLogOut }) => {
         <input
           type="email"
           name="email"
-          required
           onChange={handleChange}
           value={values.email || ""}
           placeholder={email}
@@ -60,7 +58,7 @@ const ProfileForm = ({ name, email, onEdit, onLogOut }) => {
       </span>
 
       <button
-        disabled={!isValid || !(values.name !== name && values.email !== email)}
+        disabled={!isValid || !(values.name !== name) || !(values.email !== email)}
         className={`form-profile__button ${
           isValid && (values.name !== name && values.email !== email)
             ? "form-profile__button_type_active"
