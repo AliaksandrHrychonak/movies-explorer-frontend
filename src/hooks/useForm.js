@@ -4,7 +4,6 @@ const useForm = () => {
   const [values, setValues] = useState({});
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false)
-
   const reqEx = (value) => value.replace(/  +/g, ' ')
 
   const handleChange = (event) => {
