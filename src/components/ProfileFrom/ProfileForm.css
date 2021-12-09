@@ -34,6 +34,9 @@
   border: none;
 }
 
+.form-profile__input:focus::placeholder {
+  visibility: hidden;
+}
 
 .form-profile__line {
   height: 1px;
