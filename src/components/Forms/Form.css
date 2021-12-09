@@ -14,7 +14,7 @@
   display: inline-flex;
   border: none;
   border-bottom: 1px solid #E8E8E8;
-  margin: 5px 0 24px;
+  margin: 5px 0 0;
   padding: 0 0 10px 0;
   font-family: 'Inter', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-weight: 400;
@@ -38,32 +38,56 @@
 }
 
 
-.form__input_theme_error {
+.form__input_theme_error, .form__input_theme_error:focus {
   color: #EE3465;
-  border: 1px solid #EE3465;
+  border-bottom: 1px solid #EE3465;
 }
 
 .form__error {
+  display: flex;
+  align-items: center;
   visibility: hidden;
-  margin-top: 6px;
+  min-height: 24px;
+  margin-bottom: 6px;
   font-size: 10px;
   line-height: 12px;
   color: #EE3465;
 }
 
+.form__error_type_visible {
+  visibility: visible;
+}
+
+.form__error_type_search {
+  position: absolute;
+  justify-content: center;
+  bottom: 0;
+  min-height: min-content;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 0;
+}
+
 .form__button {
   cursor: pointer;
+  color: #fff;
   height: 45px;
-  background: #3456F3;
   border: none;
   border-radius: 3px;
-  color: #fff;
   font-weight: 500;
   font-size: 14px;
   line-height: 17px;
   margin-bottom: 16px;
   margin-top: 134px;
-  transition: opacity 0.4s linear;
+  transition: opacity 0.4s, background-color 0.4s linear;
+}
+
+.form__button_type_active {
+  background-color: #3456F3;
+}
+
+.form__button_type_disabled {
+  background-color: #636363;
 }
 
 .form__button:hover {
@@ -104,5 +128,12 @@
   .form__subtitle {
     font-size: 12px;
     line-height: 15px;
+  }
+  
+}
+
+@media screen and (max-width: 450px) {
+  .form__error_type_search {
+    justify-content: flex-start;
   }
 }

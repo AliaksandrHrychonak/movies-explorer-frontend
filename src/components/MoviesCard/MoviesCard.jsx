@@ -1,30 +1,26 @@
-import { React, useState } from "react";
+import { React } from "react";
 import ButtonIsSaveMovie from "../Buttons/ButtonIsSaveMovie/ButtonIsSaveMovie";
 import "./MoviesCard.css";
+import { convertTime } from "../../utils/moviesHelper";
+const MoviesCard = ({ movie, isSavedCard, locationMovies, onSave, onDelete}) => {
 
-const MoviesCard = ({ name, duration, link, image, isSavedCard, locationMovies }) => {
-  const [isSavedMovie, setIsSavedMovie] = useState(isSavedCard);
-
-  const convertTime = (time) => {
-    const houres = Math.floor(time / 60);
-    const minutes = time % 60;
-    const newTime = `${houres}ч ${minutes}м`;
-    return newTime;
+  const handleSaveMovie = () => {
+    onSave(movie)
   };
-  const handleSavedMovie = () => {
-    setIsSavedMovie(!isSavedMovie);
-  };
+  
+  const handleDeleteMovie = () => {
+    onDelete(movie)
+  }
 
-  return (  
-    
+  return (
       <article className="card">
-        <ButtonIsSaveMovie isSaved={isSavedMovie} toggleSaved={handleSavedMovie} locationMovies={locationMovies} />
-        <a href={link} className="card-link" target="_blank" rel="noopener noreferrer">
-          <img src={`https://api.nomoreparties.co${image}`} alt={name} className="card__image" />
+        <ButtonIsSaveMovie isSaved={isSavedCard} onSave={handleSaveMovie} onDelete={handleDeleteMovie} locationMovies={locationMovies} movie={movie} />
+        <a href={movie.trailer} className="card-link" target="_blank" rel="noopener noreferrer">
+          <img src={movie.image} alt={movie.nameRU} className="card__image" />
         </a>
         <div className="card__description">
-          <p className="card__title">{name}</p>
-          <span className="card__duration">{convertTime(duration)}</span>
+          <p className="card__title">{movie.nameRU}</p>
+          <span className="card__duration">{convertTime(movie.duration)}</span>
         </div>
       </article>
     
