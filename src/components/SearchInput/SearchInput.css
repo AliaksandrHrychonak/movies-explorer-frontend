@@ -4,6 +4,7 @@
   padding: 0 0 15px;
   border-bottom: 1px solid #E8E8E8;
   transition: border-bottom 0.4s linear;
+  position: relative;
 }
 
 .form-search__label {
@@ -21,7 +22,6 @@
 }
 
 .form-search__button {
-  background-color:#3456F3;
   background-position: center;
   background-size: 15px;
   background-repeat: no-repeat;
@@ -31,7 +31,15 @@
   border: none;
   border-radius: 48px;
   cursor: pointer;
-  transition: opacity 0.4s linear;
+  transition: opacity 0.4s, background-color 0.4s linear;
+}
+
+.form-search__button_type_active {
+  background-color:#3456F3;
+}
+
+.form-search__button_type_disabled {
+  background-color:#bdbdbd;
 }
 
 .form-search__input {

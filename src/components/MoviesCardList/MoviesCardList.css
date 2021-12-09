@@ -11,6 +11,15 @@
   padding-bottom: 78px;
 }
 
+.movies__item-error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70px;
+  height: 100%;
+  font-size: 34px;
+}
+
 @media screen and (max-width: 900px) {
   .movies__item {
     grid-row-gap: 45px;
